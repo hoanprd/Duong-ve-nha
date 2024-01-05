@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - npc
+  - doorpassword
+  - glass1
+  - glass2
+  - bandit
+  - handle
+  - dooropen
+  - boxempty
   layers:
   - Default
   - TransparentFX

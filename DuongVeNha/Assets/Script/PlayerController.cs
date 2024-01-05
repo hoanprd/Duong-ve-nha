@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    public GameObject talkButton;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton;
 
     public static bool freezeMovement;
 
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         if (!freezeMovement)
         {
             movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
             animator.SetFloat("Horizontal", movement.x);
 
             if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1)
@@ -56,6 +57,34 @@ public class PlayerController : MonoBehaviour
         {
             talkButton.SetActive(true);
         }
+        else if (collision.CompareTag("doorpassword"))
+        {
+            doorPasswordFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("glass1"))
+        {
+            glass1FoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("glass2"))
+        {
+            glass2FoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("bandit"))
+        {
+            banditFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("dooropen"))
+        {
+            doorOpenButton.SetActive(true);
+        }
+        else if (collision.CompareTag("handle"))
+        {
+            handleFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("boxempty"))
+        {
+            boxEmptyFoundButton.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -63,6 +92,34 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("npc"))
         {
             talkButton.SetActive(false);
+        }
+        else if (collision.CompareTag("doorpassword"))
+        {
+            doorPasswordFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("glass1"))
+        {
+            glass1FoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("glass2"))
+        {
+            glass2FoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("bandit"))
+        {
+            banditFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("dooropen"))
+        {
+            doorOpenButton.SetActive(false);
+        }
+        else if (collision.CompareTag("handle"))
+        {
+            handleFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("boxempty"))
+        {
+            boxEmptyFoundButton.SetActive(false);
         }
     }
 
