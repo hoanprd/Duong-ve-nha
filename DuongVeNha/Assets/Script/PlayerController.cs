@@ -6,10 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     public float move_speed;
 
+    public Camera cam;
+    public Transform player;
+
     public Rigidbody2D rb;
     public Animator animator;
 
-    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, loadingPanel;
 
     public static bool freezeMovement;
 
@@ -57,7 +60,7 @@ public class PlayerController : MonoBehaviour
         {
             talkButton.SetActive(true);
         }
-        else if (collision.CompareTag("doorpassword"))
+        else if (collision.CompareTag("doorpassword") && !MainController.doorFloor3HadPick)
         {
             doorPasswordFoundButton.SetActive(true);
         }
@@ -84,6 +87,40 @@ public class PlayerController : MonoBehaviour
         else if (collision.CompareTag("boxempty") && !MainController.showEmptyBox2)
         {
             boxEmptyFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("flashlight") && !MainController.flashLightHadPick)
+        {
+            flashLightFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("electricstatue") && !MainController.electricHadFix)
+        {
+            electricStatueFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("f1tof3"))
+        {
+            StartCoroutine(DelayLoading());
+            player.position = new Vector3(23, 9, -10);
+            player.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+            cam.transform.position = new Vector3(26, 12, -11);
+        }
+        else if (collision.CompareTag("f3tof1"))
+        {
+            StartCoroutine(DelayLoading());
+            player.position = new Vector3(15, -4, -10);
+            player.localScale = new Vector3(0.18f, 0.18f, 0.18f);
+            cam.transform.position = new Vector3(10, -1, -11);
+        }
+        else if (collision.CompareTag("f1tof2"))
+        {
+            StartCoroutine(DelayLoading());
+            player.position = new Vector3(-6, -7, -10);
+            cam.transform.position = new Vector3(-11, -5, -11);
+        }
+        else if (collision.CompareTag("f2tof1"))
+        {
+            StartCoroutine(DelayLoading());
+            player.position = new Vector3(15, -4, -10);
+            cam.transform.position = new Vector3(10, -1, -11);
         }
     }
 
@@ -121,6 +158,14 @@ public class PlayerController : MonoBehaviour
         {
             boxEmptyFoundButton.SetActive(false);
         }
+        else if (collision.CompareTag("flashlight") && !MainController.flashLightHadPick)
+        {
+            flashLightFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("electricstatue") && !MainController.electricHadFix)
+        {
+            electricStatueFoundButton.SetActive(false);
+        }
     }
 
     IEnumerator DelayStartMovement()
@@ -128,6 +173,16 @@ public class PlayerController : MonoBehaviour
         freezeMovement = true;
 
         yield return new WaitForSeconds(3f);
+        freezeMovement = false;
+    }
+
+    IEnumerator DelayLoading()
+    {
+        freezeMovement = true;
+        loadingPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        loadingPanel.SetActive(false);
         freezeMovement = false;
     }
 }

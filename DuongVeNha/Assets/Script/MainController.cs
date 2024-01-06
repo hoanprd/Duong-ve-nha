@@ -8,18 +8,22 @@ public class MainController : MonoBehaviour
     public Animator banditBoxAni, emptyBoxAni, treeHidePasswordAni, catMiniGameAni;
 
     public Transform bagParent;
-    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, doorPasswordCollider;
-    public GameObject loadingPanel, dialogPanel, dialog2Panel, dialog3Panel, glass1Prefab, glass2Prefab, glassFullPrefab, banditPrefab, handlePrefab, secretMapPrefab;
-    public GameObject glass1Sprite, glass2Sprite, handleSprite, gameLog, bagHud, catMiniGamePanel, passwordZoomPanel, playChessPanel, doorOpenFloor3Panel, secretMapPanel;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, doorPasswordCollider;
+    public GameObject loadingPanel, dialogPanel, dialog2Panel, dialog3Panel, glass1Prefab, glass2Prefab, glassFullPrefab, banditPrefab, handlePrefab, secretMapPrefab, flashLightPrefab;
+    public GameObject glass1Sprite, glass2Sprite, handleSprite, flashLightSprite, gameLog, bagHud, catMiniGamePanel, passwordZoomPanel, playChessPanel, doorOpenFloor3Panel, secretMapPanel, eletricStatuePanel;
 
     public GameObject catGame, miniGameBox2, miniGameBox3, miniGameBox2Done, miniGameBox3Done, food1Game, food2Game, doorLock, doorOpen;
+
+    public GameObject floor3BG, electricStatue, eletricFixShow;
+
+    public GameObject electricText2;
 
     public InputField doorInput;
 
     public Transform catOldPosition, miniGameBox2OldPosition, miniGameBox3OldPosition;
 
     public static bool catMiniGame, showEmptyBox1, showEmptyBox2, treePushHidePassword, glassFix, chessMiniGame;
-    public static bool glass1HadPick, glass2HadPick, banditHadPick, handleHadPick, doorFloor3HadPick;
+    public static bool glass1HadPick, glass2HadPick, banditHadPick, handleHadPick, doorFloor3HadPick, flashLightHadPick, electricHadFix;
     public static bool banditUse, secretMapUse;
 
     private bool showBandit, box2Done, box3Done, food1Done, food2Done;
@@ -29,6 +33,8 @@ public class MainController : MonoBehaviour
     void Start()
     {
         StartCoroutine(DelayLoading());
+
+        //floor3BG.GetComponent<Renderer>().material.color = Color.red;
 
         //catOldPosition.position = catGame.transform.position;
         //miniGameBox2OldPosition.position = miniGameBox2.transform.position;
@@ -54,6 +60,17 @@ public class MainController : MonoBehaviour
             secretMapUse = false;
             secretMapPanel.SetActive(true);
         }
+
+        /*if (flashLightHadPick)
+        {
+            electricStatue.GetComponent<Image>().color = Color.white;
+        }
+
+        if (electricHadFix)
+        {
+            electricHadFix = false;
+            floor3BG.GetComponent<Renderer>().material.color = Color.white;
+        }*/
     }
 
     public void EnterPasswordDoor()
@@ -199,6 +216,38 @@ public class MainController : MonoBehaviour
         }
     }
 
+    public void FlashLightPick()
+    {
+        if (ContainerController.contentQuanity < 5)
+        {
+            flashLightHadPick = true;
+            flashLightFoundButton.SetActive(false);
+            Destroy(flashLightSprite);
+            ContainerController.flashLight += 1;
+            ContainerController.contentQuanity += 1;
+            Instantiate(flashLightPrefab, bagParent);
+        }
+        else if (ContainerController.contentQuanity >= 5)
+        {
+            StopAllCoroutines();
+            gameLog.SetActive(true);
+            gameLog.GetComponent<Text>().text = "Đã chật slot túi đồ";
+            StartCoroutine(DelayGameLog());
+        }
+    }
+
+    public void ElectricStatueShow()
+    {
+        PlayerController.freezeMovement = true;
+        eletricStatuePanel.SetActive(true);
+
+        if (flashLightHadPick)
+        {
+            electricText2.SetActive(true);
+            electricStatue.GetComponent<Image>().color = Color.white;
+        }
+    }
+
     public void EndDialog()
     {
         if (!glassFix)
@@ -330,6 +379,26 @@ public class MainController : MonoBehaviour
         PlayerController.freezeMovement = false;
     }
 
+    public void FixElectric()
+    {
+        if (handleHadPick)
+        {
+            electricHadFix = true;
+            electricStatueFoundButton.SetActive(false);
+            floor3BG.SetActive(false);
+            ContainerController.handle -= 1;
+            electricStatue.SetActive(false);
+            eletricFixShow.SetActive(true);
+            StartCoroutine(DelayElectricFix());
+        }
+    }
+
+    public void CloseFixElectric()
+    {
+        eletricStatuePanel.SetActive(false);
+        PlayerController.freezeMovement = false;
+    }
+
     IEnumerator CatMiniGameDelay()
     {
         yield return new WaitForSeconds(1f);
@@ -354,5 +423,12 @@ public class MainController : MonoBehaviour
         chessMiniGame = true;
         playChessPanel.SetActive(false);
         dialog3Panel.SetActive(true);
+    }
+
+    IEnumerator DelayElectricFix()
+    {
+        yield return new WaitForSeconds(2f);
+        eletricStatuePanel.SetActive(false);
+        PlayerController.freezeMovement = false;
     }
 }

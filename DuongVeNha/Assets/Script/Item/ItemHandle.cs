@@ -34,6 +34,10 @@ public class ItemHandle : MonoBehaviour
         {
             //handle
         }
+        else if (itemIndex == 6)
+        {
+            //flashLight
+        }
     }
 
     public void CheckToDestroyItem(GameObject gameObject, int quanity)

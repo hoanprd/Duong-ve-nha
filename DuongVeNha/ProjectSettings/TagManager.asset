@@ -16,6 +16,8 @@ TagManager:
   - f1tof2
   - f3tof1
   - f2tof1
+  - flashlight
+  - electricstatue
   layers:
   - Default
   - TransparentFX
