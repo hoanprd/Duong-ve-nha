@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("npc"))
+        if (collision.CompareTag("npc") && !MainController.chessMiniGame)
         {
             talkButton.SetActive(true);
         }
@@ -61,27 +61,27 @@ public class PlayerController : MonoBehaviour
         {
             doorPasswordFoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("glass1"))
+        else if (collision.CompareTag("glass1") && !MainController.glass1HadPick)
         {
             glass1FoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("glass2"))
+        else if (collision.CompareTag("glass2") && !MainController.glass2HadPick)
         {
             glass2FoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("bandit"))
+        else if (collision.CompareTag("bandit") && !MainController.banditHadPick)
         {
             banditFoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("dooropen"))
+        else if (collision.CompareTag("dooropen") && !MainController.doorFloor3HadPick)
         {
             doorOpenButton.SetActive(true);
         }
-        else if (collision.CompareTag("handle"))
+        else if (collision.CompareTag("handle") && !MainController.handleHadPick)
         {
             handleFoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("boxempty"))
+        else if (collision.CompareTag("boxempty") && !MainController.showEmptyBox2)
         {
             boxEmptyFoundButton.SetActive(true);
         }
@@ -89,35 +89,35 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("npc"))
+        if (collision.CompareTag("npc") && !MainController.chessMiniGame)
         {
             talkButton.SetActive(false);
         }
-        else if (collision.CompareTag("doorpassword"))
+        else if (collision.CompareTag("doorpassword") && !MainController.doorFloor3HadPick)
         {
             doorPasswordFoundButton.SetActive(false);
         }
-        else if (collision.CompareTag("glass1"))
+        else if (collision.CompareTag("glass1") && !MainController.glass1HadPick)
         {
             glass1FoundButton.SetActive(false);
         }
-        else if (collision.CompareTag("glass2"))
+        else if (collision.CompareTag("glass2") && !MainController.glass2HadPick)
         {
             glass2FoundButton.SetActive(false);
         }
-        else if (collision.CompareTag("bandit"))
+        else if (collision.CompareTag("bandit") && !MainController.banditHadPick)
         {
             banditFoundButton.SetActive(false);
         }
-        else if (collision.CompareTag("dooropen"))
+        else if (collision.CompareTag("dooropen") && !MainController.doorFloor3HadPick)
         {
             doorOpenButton.SetActive(false);
         }
-        else if (collision.CompareTag("handle"))
+        else if (collision.CompareTag("handle") && !MainController.handleHadPick)
         {
             handleFoundButton.SetActive(false);
         }
-        else if (collision.CompareTag("boxempty"))
+        else if (collision.CompareTag("boxempty") && !MainController.showEmptyBox2)
         {
             boxEmptyFoundButton.SetActive(false);
         }
