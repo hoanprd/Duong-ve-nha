@@ -18,6 +18,11 @@ TagManager:
   - f2tof1
   - flashlight
   - electricstatue
+  - watertank
+  - talknpc2
+  - poledoing
+  - watertap
+  - watertree
   layers:
   - Default
   - TransparentFX

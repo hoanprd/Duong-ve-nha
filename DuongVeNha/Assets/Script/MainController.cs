@@ -5,25 +5,23 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour
 {
-    public Animator banditBoxAni, emptyBoxAni, treeHidePasswordAni, catMiniGameAni;
+    public Animator banditBoxAni, emptyBoxAni, treeHidePasswordAni, catMiniGameAni, waterTapAni, waterTree1Ani, waterTree2Ani, waterTree3Ani, poleAni, bansinAni;
 
     public Transform bagParent;
-    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, doorPasswordCollider;
-    public GameObject loadingPanel, dialogPanel, dialog2Panel, dialog3Panel, glass1Prefab, glass2Prefab, glassFullPrefab, banditPrefab, handlePrefab, secretMapPrefab, flashLightPrefab;
-    public GameObject glass1Sprite, glass2Sprite, handleSprite, flashLightSprite, gameLog, bagHud, catMiniGamePanel, passwordZoomPanel, playChessPanel, doorOpenFloor3Panel, secretMapPanel, eletricStatuePanel;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, waterTankFoundButton, doorFloor4FoundButton, npc2TalkButton, waterTapFoundButton, waterTreeFoundButton, bansinFoundButton, doorPasswordCollider;
+    public GameObject loadingPanel, dialogPanel, dialog2Panel, dialog3Panel, glass1Prefab, glass2Prefab, glassFullPrefab, banditPrefab, handlePrefab, secretMapPrefab, flashLightPrefab, waterTankPrefab, waterTankFullPrefab, hookPrefab, keyFloor4Prefab;
+    public GameObject glass1Sprite, glass2Sprite, handleSprite, flashLightSprite, waterTankSprite, waterTankFullSprite, gameLog, bagHud, catMiniGamePanel, passwordZoomPanel, playChessPanel, doorOpenFloor3Panel, secretMapPanel, eletricStatuePanel;
 
     public GameObject catGame, miniGameBox2, miniGameBox3, miniGameBox2Done, miniGameBox3Done, food1Game, food2Game, doorLock, doorOpen;
 
-    public GameObject floor3BG, electricStatue, eletricFixShow;
-
-    public GameObject electricText2;
+    public GameObject floor3BG, electricStatue, eletricFixShow, electricFixButon;
 
     public InputField doorInput;
 
     public Transform catOldPosition, miniGameBox2OldPosition, miniGameBox3OldPosition;
 
     public static bool catMiniGame, showEmptyBox1, showEmptyBox2, treePushHidePassword, glassFix, chessMiniGame;
-    public static bool glass1HadPick, glass2HadPick, banditHadPick, handleHadPick, doorFloor3HadPick, flashLightHadPick, electricHadFix;
+    public static bool glass1HadPick, glass2HadPick, banditHadPick, handleHadPick, doorFloor3HadPick, flashLightHadPick, electricHadFix, waterTankHadPick, waterTapHadRun, waterTankFullHadPick, waterTreeHadDone, poleHadDone, keyFloor4HadPick;
     public static bool banditUse, secretMapUse;
 
     private bool showBandit, box2Done, box3Done, food1Done, food2Done;
@@ -51,6 +49,7 @@ public class MainController : MonoBehaviour
             ContainerController.glass1 -= 1;
             ContainerController.glass2 -= 1;
             ContainerController.glassFull += 1;
+            ContainerController.contentQuanity -= 2;
             glassFix = true;
             Instantiate(glassFullPrefab, bagParent);
         }
@@ -103,21 +102,23 @@ public class MainController : MonoBehaviour
         else if (!chessMiniGame && glassFix)
         {
             ContainerController.glassFull -= 1;
+            ContainerController.contentQuanity -= 1;
             dialog2Panel.SetActive(true);
         }
     }
 
     public void glass1Pick()
     {
-        if (ContainerController.contentQuanity < 5)
+        if (ContainerController.contentQuanity < 7)
         {
             glass1HadPick = true;
             glass1FoundButton.SetActive(false);
             Destroy(glass1Sprite);
             ContainerController.glass1 += 1;
+            ContainerController.contentQuanity += 1;
             Instantiate(glass1Prefab, bagParent);
         }
-        else if (ContainerController.contentQuanity >= 5)
+        else if (ContainerController.contentQuanity >= 7)
         {
             StopAllCoroutines();
             gameLog.GetComponent<Text>().text = "Đã chật slot túi đồ";
@@ -143,7 +144,7 @@ public class MainController : MonoBehaviour
         }
         else
         {
-            if (ContainerController.contentQuanity < 5)
+            if (ContainerController.contentQuanity < 7)
             {
                 banditHadPick = true;
                 banditBoxAni.SetTrigger("takebandit");
@@ -152,7 +153,7 @@ public class MainController : MonoBehaviour
                 ContainerController.contentQuanity += 1;
                 Instantiate(banditPrefab, bagParent);
             }
-            else if (ContainerController.contentQuanity >= 5)
+            else if (ContainerController.contentQuanity >= 7)
             {
                 StopAllCoroutines();
                 gameLog.SetActive(true);
@@ -164,7 +165,7 @@ public class MainController : MonoBehaviour
 
     public void HandlePick()
     {
-        if (ContainerController.contentQuanity < 5)
+        if (ContainerController.contentQuanity < 7)
         {
             handleHadPick = true;
             handleFoundButton.SetActive(false);
@@ -173,7 +174,7 @@ public class MainController : MonoBehaviour
             ContainerController.contentQuanity += 1;
             Instantiate(handlePrefab, bagParent);
         }
-        else if (ContainerController.contentQuanity >= 5)
+        else if (ContainerController.contentQuanity >= 7)
         {
             StopAllCoroutines();
             gameLog.SetActive(true);
@@ -218,7 +219,7 @@ public class MainController : MonoBehaviour
 
     public void FlashLightPick()
     {
-        if (ContainerController.contentQuanity < 5)
+        if (ContainerController.contentQuanity < 7)
         {
             flashLightHadPick = true;
             flashLightFoundButton.SetActive(false);
@@ -227,7 +228,7 @@ public class MainController : MonoBehaviour
             ContainerController.contentQuanity += 1;
             Instantiate(flashLightPrefab, bagParent);
         }
-        else if (ContainerController.contentQuanity >= 5)
+        else if (ContainerController.contentQuanity >= 7)
         {
             StopAllCoroutines();
             gameLog.SetActive(true);
@@ -243,9 +244,102 @@ public class MainController : MonoBehaviour
 
         if (flashLightHadPick)
         {
-            electricText2.SetActive(true);
+            electricFixButon.SetActive(true);
             electricStatue.GetComponent<Image>().color = Color.white;
         }
+    }
+
+    public void WaterTankPick()
+    {
+        if (ContainerController.contentQuanity < 7)
+        {
+            waterTankHadPick = true;
+            waterTankFoundButton.SetActive(false);
+            Destroy(waterTankSprite);
+            ContainerController.waterTank += 1;
+            ContainerController.contentQuanity += 1;
+            Instantiate(waterTankPrefab, bagParent);
+        }
+        else if (ContainerController.contentQuanity >= 7)
+        {
+            StopAllCoroutines();
+            gameLog.SetActive(true);
+            gameLog.GetComponent<Text>().text = "Đã chật slot túi đồ";
+            StartCoroutine(DelayGameLog());
+        }
+    }
+
+    public void NPC2Talk()
+    {
+
+    }
+
+    public void WaterTapOpen()
+    {
+        if (waterTankHadPick && !waterTapHadRun)
+        {
+            waterTapAni.SetTrigger("waterfull");
+            //waterTapFoundButton.SetActive(false);
+            ContainerController.waterTank -= 1;
+            ContainerController.contentQuanity -= 1;
+            StartCoroutine(DelayWaterTankFull());
+        }
+        else if (waterTankHadPick && waterTapHadRun)
+        {
+            waterTankFullHadPick = true;
+            waterTapFoundButton.SetActive(false);
+            Destroy(waterTankFullSprite);
+            ContainerController.waterTankFull += 1;
+            ContainerController.contentQuanity += 1;
+            Instantiate(waterTankFullPrefab, bagParent);
+        }
+    }
+
+    public void WaterTree()
+    {
+        if (waterTankFullHadPick)
+        {
+            waterTreeFoundButton.SetActive(false);
+            ContainerController.waterTankFull -= 1;
+            ContainerController.contentQuanity -= 1;
+            StartCoroutine(DelayWatering());
+        }
+    }
+
+    public void PoleDoing()
+    {
+        if (waterTreeHadDone && !poleHadDone)
+        {
+            poleHadDone = true;
+            ContainerController.hook -= 1;
+            ContainerController.contentQuanity -= 1;
+            poleAni.SetTrigger("polerun");
+            bansinAni.SetTrigger("bansinrun");
+        }
+        else if (waterTreeHadDone && poleHadDone)
+        {
+            if (ContainerController.contentQuanity < 7)
+            {
+                keyFloor4HadPick = true;
+                bansinFoundButton.SetActive(false);
+                poleAni.SetTrigger("takekey");
+                ContainerController.keyFloor4 += 1;
+                ContainerController.contentQuanity += 1;
+                Instantiate(keyFloor4Prefab, bagParent);
+            }
+            else if (ContainerController.contentQuanity >= 7)
+            {
+                StopAllCoroutines();
+                gameLog.SetActive(true);
+                gameLog.GetComponent<Text>().text = "Đã chật slot túi đồ";
+                StartCoroutine(DelayGameLog());
+            }
+        }    
+    }
+
+    public void OpenDoorFloor4()
+    {
+        
     }
 
     public void EndDialog()
@@ -266,6 +360,7 @@ public class MainController : MonoBehaviour
             talkButton.SetActive(false);
             dialog3Panel.SetActive(false);
             ContainerController.secretMap += 1;
+            ContainerController.contentQuanity += 1;
             Instantiate(secretMapPrefab, bagParent);
             PlayerController.freezeMovement = false;
         }
@@ -341,13 +436,14 @@ public class MainController : MonoBehaviour
         if (food1Done && food2Done)
         {
             catMiniGamePanel.SetActive(false);
-            if (ContainerController.contentQuanity < 5)
+            if (ContainerController.contentQuanity < 7)
             {
                 glass2HadPick = true;
                 catMiniGame = true;
                 glass2FoundButton.SetActive(false);
                 Destroy(glass2Sprite);
                 ContainerController.glass2 += 1;
+                ContainerController.contentQuanity += 1;
                 PlayerController.freezeMovement = false;
                 Instantiate(glass2Prefab, bagParent);
             }
@@ -387,6 +483,7 @@ public class MainController : MonoBehaviour
             electricStatueFoundButton.SetActive(false);
             floor3BG.SetActive(false);
             ContainerController.handle -= 1;
+            ContainerController.contentQuanity -= 1;
             electricStatue.SetActive(false);
             eletricFixShow.SetActive(true);
             StartCoroutine(DelayElectricFix());
@@ -430,5 +527,30 @@ public class MainController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         eletricStatuePanel.SetActive(false);
         PlayerController.freezeMovement = false;
+    }
+
+    IEnumerator DelayWaterTankFull()
+    {
+        yield return new WaitForSeconds(1f);
+        waterTapHadRun = true;
+    }
+
+    IEnumerator DelayWatering()
+    {
+        PlayerController.freezeMovement = true;
+        waterTree1Ani.SetTrigger("watertree1");
+
+        yield return new WaitForSeconds(1f);
+        waterTree2Ani.SetTrigger("watertree2");
+
+        yield return new WaitForSeconds(1f);
+        waterTree3Ani.SetTrigger("watertree3");
+
+        yield return new WaitForSeconds(0.5f);
+        PlayerController.freezeMovement = false;
+        waterTreeHadDone = true;
+        ContainerController.hook += 1;
+        ContainerController.contentQuanity += 1;
+        Instantiate(hookPrefab, bagParent);
     }
 }

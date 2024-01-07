@@ -38,6 +38,22 @@ public class ItemHandle : MonoBehaviour
         {
             //flashLight
         }
+        else if (itemIndex == 7)
+        {
+            //waterTank
+        }
+        else if (itemIndex == 8)
+        {
+            //waterTankFull
+        }
+        else if (itemIndex == 9)
+        {
+            //hook
+        }
+        else if (itemIndex == 10)
+        {
+            //keyFloor4
+        }
     }
 
     public void CheckToDestroyItem(GameObject gameObject, int quanity)

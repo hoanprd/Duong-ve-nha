@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4349446035259716378}
   - component: {fileID: 1611431992870252489}
   - component: {fileID: 4902570820700323735}
-  - component: {fileID: 5917883668164378504}
+  - component: {fileID: 4555589408336669386}
   m_Layer: 5
-  m_Name: HandleItemButton (Legacy)
+  m_Name: KeyFloor4ItemButton (Legacy)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3635dd35749c1f24695f7402169e8ff8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1af3054226ee2e14495e1fb73d9a9942, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -121,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5917883668164378504}
-        m_TargetAssemblyTypeName: HandleItem, Assembly-CSharp
-        m_MethodName: HandleUse
+      - m_Target: {fileID: 4555589408336669386}
+        m_TargetAssemblyTypeName: KeyFloor4Item, Assembly-CSharp
+        m_MethodName: KeyFloor4Use
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5917883668164378504
+--- !u!114 &4555589408336669386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1506686448039183699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05e3dc0f389eb24458cf56d3147d53d5, type: 3}
+  m_Script: {fileID: 11500000, guid: e5a5f52b5606af9479cb31a615e0fcfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hadnle: {fileID: 1506686448039183699}
+  keyFloor4: {fileID: 1506686448039183699}

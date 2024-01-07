@@ -14,6 +14,6 @@ public class LoadingController : MonoBehaviour
     IEnumerator DelayFadeIn()
     {
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MainScene");
     }
 }

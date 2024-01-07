@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, loadingPanel;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, waterTankFoundButton, doorFloor4FoundButton, npc2TalkButton, waterTapFoundButton, waterTreeFoundButton, bansinFoundButton, loadingPanel;
 
     public static bool freezeMovement;
 
@@ -96,6 +96,26 @@ public class PlayerController : MonoBehaviour
         {
             electricStatueFoundButton.SetActive(true);
         }
+        else if (collision.CompareTag("watertank") && MainController.electricHadFix && !MainController.waterTankHadPick)
+        {
+            waterTankFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("talknpc2") && !MainController.poleHadDone)
+        {
+            npc2TalkButton.SetActive(true);
+        }
+        else if (collision.CompareTag("watertap") && !MainController.waterTankFullHadPick)
+        {
+            waterTapFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("watertree") && !MainController.waterTreeHadDone)
+        {
+            waterTreeFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("poledoing") && (MainController.waterTreeHadDone && !MainController.poleHadDone) || (MainController.waterTreeHadDone && !MainController.keyFloor4HadPick))
+        {
+            bansinFoundButton.SetActive(true);
+        }
         else if (collision.CompareTag("f1tof3"))
         {
             StartCoroutine(DelayLoading());
@@ -119,7 +139,7 @@ public class PlayerController : MonoBehaviour
         else if (collision.CompareTag("f2tof1"))
         {
             StartCoroutine(DelayLoading());
-            player.position = new Vector3(15, -4, -10);
+            player.position = new Vector3(5.5f, -4, -10);
             cam.transform.position = new Vector3(10, -1, -11);
         }
     }
@@ -165,6 +185,26 @@ public class PlayerController : MonoBehaviour
         else if (collision.CompareTag("electricstatue") && !MainController.electricHadFix)
         {
             electricStatueFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("watertank") && MainController.electricHadFix && !MainController.waterTankHadPick)
+        {
+            waterTankFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("talknpc2") && !MainController.poleHadDone)
+        {
+            npc2TalkButton.SetActive(false);
+        }
+        else if (collision.CompareTag("watertap") && !MainController.waterTankFullHadPick)
+        {
+            waterTapFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("watertree") && !MainController.waterTreeHadDone)
+        {
+            waterTreeFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("poledoing") && (MainController.waterTreeHadDone && !MainController.poleHadDone) || (MainController.waterTreeHadDone && !MainController.keyFloor4HadPick))
+        {
+            bansinFoundButton.SetActive(false);
         }
     }
 
