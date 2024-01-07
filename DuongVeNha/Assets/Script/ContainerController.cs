@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class ContainerController : MonoBehaviour
 {
-    public static int contentQuanity, glass1, glass2, bandit, glassFull, handle, secretMap, flashLight, waterTank, waterTankFull, hook, keyFloor4;
+    public static int contentQuanity, glass1, glass2, bandit, glassFull, handle, secretMap, flashLight, waterTank, waterTankFull, hook, keyFloor4, homeKey;
 }

@@ -54,6 +54,10 @@ public class ItemHandle : MonoBehaviour
         {
             //keyFloor4
         }
+        else if (itemIndex == 11)
+        {
+            //homeKey
+        }
     }
 
     public void CheckToDestroyItem(GameObject gameObject, int quanity)

@@ -23,6 +23,12 @@ TagManager:
   - poledoing
   - watertap
   - watertree
+  - doorfloor4
+  - f4tof3
+  - box41
+  - box42
+  - bucket
+  - homedoor
   layers:
   - Default
   - TransparentFX

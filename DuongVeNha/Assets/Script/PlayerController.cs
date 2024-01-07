@@ -12,9 +12,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, waterTankFoundButton, doorFloor4FoundButton, npc2TalkButton, waterTapFoundButton, waterTreeFoundButton, bansinFoundButton, loadingPanel;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, waterTankFoundButton, doorFloor4FoundButton, npc2TalkButton, waterTapFoundButton, waterTreeFoundButton, bansinFoundButton, box41FoundButton, box42FoundButton, BucketFoundButton, HomeDoorFoundButton, loadingPanel;
+    public GameObject cameraObject;
 
-    public static bool freezeMovement;
+    public static bool freezeMovement, finalFloorGo;
 
     Vector2 movement;
 
@@ -43,6 +44,18 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetFloat("Speed", 0);
+            movement.x = 0;
+            movement.y = 0;
+        }
+
+        if (finalFloorGo)
+        {
+            finalFloorGo = false;
+            StartCoroutine(DelayLoading());
+            player.position = new Vector3(53.5f, 9.1f, -10);
+            cam.transform.position = new Vector3(53.5f, 12f, -11);
+            player.localScale = new Vector3(0.18f, 0.18f, 0.18f);
+            cameraObject.GetComponent<CameraController>().enabled = true;
         }
     }
 
@@ -100,7 +113,7 @@ public class PlayerController : MonoBehaviour
         {
             waterTankFoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("talknpc2") && !MainController.poleHadDone)
+        else if (collision.CompareTag("talknpc2") && !MainController.waterTreeHadDone)
         {
             npc2TalkButton.SetActive(true);
         }
@@ -112,9 +125,29 @@ public class PlayerController : MonoBehaviour
         {
             waterTreeFoundButton.SetActive(true);
         }
-        else if (collision.CompareTag("poledoing") && (MainController.waterTreeHadDone && !MainController.poleHadDone) || (MainController.waterTreeHadDone && !MainController.keyFloor4HadPick))
+        else if ((collision.CompareTag("poledoing") && MainController.waterTreeHadDone && !MainController.poleHadDone) || (collision.CompareTag("poledoing") && MainController.waterTreeHadDone && !MainController.keyFloor4HadPick))
         {
             bansinFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("doorfloor4") && MainController.keyFloor4HadPick)
+        {
+            doorFloor4FoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("box41") && !MainController.box41HadPick)
+        {
+            box41FoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("box42") && !MainController.homeKeyHadPick)
+        {
+            box42FoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("bucket") && !MainController.bucketHadPick)
+        {
+            BucketFoundButton.SetActive(true);
+        }
+        else if (collision.CompareTag("homedoor") && MainController.homeKeyHadPick)
+        {
+            HomeDoorFoundButton.SetActive(true);
         }
         else if (collision.CompareTag("f1tof3"))
         {
@@ -141,6 +174,14 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(DelayLoading());
             player.position = new Vector3(5.5f, -4, -10);
             cam.transform.position = new Vector3(10, -1, -11);
+        }
+        else if (collision.CompareTag("f4tof3"))
+        {
+            StartCoroutine(DelayLoading());
+            cameraObject.GetComponent<CameraController>().enabled = false;
+            player.position = new Vector3(23, 9, -10);
+            player.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+            cam.transform.position = new Vector3(26, 12, -11);
         }
     }
 
@@ -190,7 +231,7 @@ public class PlayerController : MonoBehaviour
         {
             waterTankFoundButton.SetActive(false);
         }
-        else if (collision.CompareTag("talknpc2") && !MainController.poleHadDone)
+        else if (collision.CompareTag("talknpc2") && !MainController.waterTreeHadDone)
         {
             npc2TalkButton.SetActive(false);
         }
@@ -205,6 +246,26 @@ public class PlayerController : MonoBehaviour
         else if (collision.CompareTag("poledoing") && (MainController.waterTreeHadDone && !MainController.poleHadDone) || (MainController.waterTreeHadDone && !MainController.keyFloor4HadPick))
         {
             bansinFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("doorfloor4") && MainController.keyFloor4HadPick)
+        {
+            doorFloor4FoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("box41") && !MainController.box41HadPick)
+        {
+            box41FoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("box42") && !MainController.homeKeyHadPick)
+        {
+            box42FoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("bucket") && !MainController.bucketHadPick)
+        {
+            BucketFoundButton.SetActive(false);
+        }
+        else if (collision.CompareTag("homedoor") && MainController.homeKeyHadPick)
+        {
+            HomeDoorFoundButton.SetActive(false);
         }
     }
 

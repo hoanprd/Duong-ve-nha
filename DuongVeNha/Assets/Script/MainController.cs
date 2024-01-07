@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour
 {
-    public Animator banditBoxAni, emptyBoxAni, treeHidePasswordAni, catMiniGameAni, waterTapAni, waterTree1Ani, waterTree2Ani, waterTree3Ani, poleAni, bansinAni;
+    public Animator banditBoxAni, emptyBoxAni, treeHidePasswordAni, catMiniGameAni, waterTapAni, waterTree1Ani, waterTree2Ani, waterTree3Ani, poleAni, bansinAni, box41Ani, box42Ani, bucketAni;
 
     public Transform bagParent;
-    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, waterTankFoundButton, doorFloor4FoundButton, npc2TalkButton, waterTapFoundButton, waterTreeFoundButton, bansinFoundButton, doorPasswordCollider;
-    public GameObject loadingPanel, dialogPanel, dialog2Panel, dialog3Panel, glass1Prefab, glass2Prefab, glassFullPrefab, banditPrefab, handlePrefab, secretMapPrefab, flashLightPrefab, waterTankPrefab, waterTankFullPrefab, hookPrefab, keyFloor4Prefab;
+    public GameObject talkButton, doorPasswordFoundButton, glass1FoundButton, glass2FoundButton, banditFoundButton, doorOpenButton, handleFoundButton, boxEmptyFoundButton, flashLightFoundButton, electricStatueFoundButton, waterTankFoundButton, doorFloor4FoundButton, npc2TalkButton, waterTapFoundButton, waterTreeFoundButton, bansinFoundButton, box41FoundButton, box42FoundButton, BucketFoundButton, HomeDoorFoundButton;
+    public GameObject loadingPanel, dialogPanel, dialog2Panel, dialog3Panel, dialog4Panel, dialog5Panel, endPanel, glass1Prefab, glass2Prefab, glassFullPrefab, banditPrefab, handlePrefab, secretMapPrefab, flashLightPrefab, waterTankPrefab, waterTankFullPrefab, hookPrefab, keyFloor4Prefab, homeKeyPrefab;
     public GameObject glass1Sprite, glass2Sprite, handleSprite, flashLightSprite, waterTankSprite, waterTankFullSprite, gameLog, bagHud, catMiniGamePanel, passwordZoomPanel, playChessPanel, doorOpenFloor3Panel, secretMapPanel, eletricStatuePanel;
 
     public GameObject catGame, miniGameBox2, miniGameBox3, miniGameBox2Done, miniGameBox3Done, food1Game, food2Game, doorLock, doorOpen;
@@ -21,7 +21,7 @@ public class MainController : MonoBehaviour
     public Transform catOldPosition, miniGameBox2OldPosition, miniGameBox3OldPosition;
 
     public static bool catMiniGame, showEmptyBox1, showEmptyBox2, treePushHidePassword, glassFix, chessMiniGame;
-    public static bool glass1HadPick, glass2HadPick, banditHadPick, handleHadPick, doorFloor3HadPick, flashLightHadPick, electricHadFix, waterTankHadPick, waterTapHadRun, waterTankFullHadPick, waterTreeHadDone, poleHadDone, keyFloor4HadPick;
+    public static bool glass1HadPick, glass2HadPick, banditHadPick, handleHadPick, doorFloor3HadPick, flashLightHadPick, electricHadFix, waterTankHadPick, waterTapHadRun, waterTankFullHadPick, waterTreeHadDone, poleHadDone, keyFloor4HadPick, box41HadPick, box42HadPick, bucketHadPick, homeKeyHadPick;
     public static bool banditUse, secretMapUse;
 
     private bool showBandit, box2Done, box3Done, food1Done, food2Done;
@@ -76,7 +76,7 @@ public class MainController : MonoBehaviour
     {
         if (doorInput.text == "523416")
         {
-            Destroy(doorPasswordCollider);
+            //Destroy(doorPasswordCollider);
             doorFloor3HadPick = true;
             doorOpenButton.SetActive(false);
             doorOpenFloor3Panel.SetActive(false);
@@ -271,7 +271,11 @@ public class MainController : MonoBehaviour
 
     public void NPC2Talk()
     {
-
+        if (!waterTreeHadDone)
+        {
+            PlayerController.freezeMovement = true;
+            dialog4Panel.SetActive(true);
+        }
     }
 
     public void WaterTapOpen()
@@ -339,7 +343,56 @@ public class MainController : MonoBehaviour
 
     public void OpenDoorFloor4()
     {
-        
+        PlayerController.finalFloorGo = true;
+    }
+
+    public void Box41Open()
+    {
+        box41HadPick = true;
+        box41FoundButton.SetActive(false);
+        box41Ani.SetTrigger("box41open");
+    }
+
+    public void Box42Open()
+    {
+        if (!box42HadPick && !homeKeyHadPick)
+        {
+            box42HadPick = true;
+            box42Ani.SetTrigger("box42open");
+        }
+        else if (box42HadPick && !homeKeyHadPick)
+        {
+            if (ContainerController.contentQuanity < 7)
+            {
+                homeKeyHadPick = true;
+                box42FoundButton.SetActive(false);
+                box42Ani.SetTrigger("homekeytake");
+                ContainerController.homeKey += 1;
+                ContainerController.contentQuanity += 1;
+                Instantiate(homeKeyPrefab, bagParent);
+            }
+            else if (ContainerController.contentQuanity >= 7)
+            {
+                StopAllCoroutines();
+                gameLog.SetActive(true);
+                gameLog.GetComponent<Text>().text = "Đã chật slot túi đồ";
+                StartCoroutine(DelayGameLog());
+            }
+        }
+    }
+
+    public void BucketOpen()
+    {
+        bucketHadPick = true;
+        bucketAni.SetTrigger("bucketopen");
+    }
+
+    public void HomeDoorOpen()
+    {
+        if (homeKeyHadPick)
+        {
+            StartCoroutine(DelayHomeDoorOpen());
+        }
     }
 
     public void EndDialog()
@@ -363,6 +416,20 @@ public class MainController : MonoBehaviour
             ContainerController.contentQuanity += 1;
             Instantiate(secretMapPrefab, bagParent);
             PlayerController.freezeMovement = false;
+        }
+    }
+
+    public void EndDialog2()
+    {
+        PlayerController.freezeMovement = false;
+
+        if (!waterTreeHadDone)
+        {
+            dialog4Panel.SetActive(false);
+        }    
+        else
+        {
+            dialog5Panel.SetActive(false);
         }
     }
 
@@ -547,10 +614,19 @@ public class MainController : MonoBehaviour
         waterTree3Ani.SetTrigger("watertree3");
 
         yield return new WaitForSeconds(0.5f);
-        PlayerController.freezeMovement = false;
+        //PlayerController.freezeMovement = false;
         waterTreeHadDone = true;
         ContainerController.hook += 1;
         ContainerController.contentQuanity += 1;
         Instantiate(hookPrefab, bagParent);
+        dialog5Panel.SetActive(true);
+    }
+
+    IEnumerator DelayHomeDoorOpen()
+    {
+        endPanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        Application.Quit();
     }
 }
